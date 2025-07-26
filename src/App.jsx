@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import ReactConfetti from 'react-confetti'
-
+import audio from './favicon/coin.mp3'
+import waudio from './favicon/wrong.mp3'
 function App() {
+  const audioPlay = new Audio(audio)
+  const waudioPlay = new Audio(waudio)
+  audioPlay.volume = 1
+  waudioPlay.volume = 1
   const text = ["money","python","garden","purchase","hospital","chemistry","today","mouse","mistake","sandwich"]
   const hint = ["dollar dollars $$$","sssssssssssssssssssssssssssssssssssssssssssssssss","flower pots, spades, fertilizers....","fancy way of saying buy","broke your legs go there, need a stitch go there","we need to cook, Mr White","not tomorrow not yesterday","ratatouie","women dont' make","peanut butter jelly _____"]
     let random = Math.floor(Math.random()*text.length)
@@ -37,8 +42,13 @@ function App() {
     if(game.correct.includes(e.target.value)){
 
     }
+    else if(game.text.includes(e.target.value)){
+    audioPlay.play()
+    setGame(prev => ({...prev, correct: [...prev.correct, e.target.value]}))
+    }
     else{
-    game.text.includes(e.target.value)? setGame(prev => ({...prev, correct: [...prev.correct, e.target.value]})): setGame(prev => ({...prev, wrong: [...prev.wrong, e.target.value]}))
+      waudioPlay.play()
+setGame(prev => ({...prev, wrong: [...prev.wrong, e.target.value]}))
     }
     
   }
